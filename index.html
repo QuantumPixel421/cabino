@@ -66,8 +66,9 @@
     }
 
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 2rem;
       width: 100%;
       max-width: 1000px;
@@ -76,7 +77,8 @@
 
     .image-container {
       position: relative;
-      aspect-ratio: 3 / 4;
+      width: 280px;
+      height: 370px;
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
