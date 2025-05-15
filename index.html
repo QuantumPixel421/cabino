@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cabino el Pajarito</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #fceabb, #f8b500);
+      animation: fadeBackground 10s infinite alternate;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      color: #333;
+      padding: 2rem;
+    }
+
+    .hero {
+      width: 100%;
+      max-width: 360px;
+      margin-bottom: 2rem;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .hero video {
+      width: 100%;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      animation: fadeIn 2.5s ease-in-out;
+    }
+
+    @media (min-width: 600px) {
+      h1 {
+        font-size: 3rem;
+      }
+      p {
+        font-size: 1.2rem;
+      }
+    }
+
+    .click-instruction {
+      font-weight: bold;
+      margin-bottom: 1rem;
+      animation: fadeIn 2.8s ease-in-out;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      max-width: 1000px;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    .image-container {
+      aspect-ratio: 3 / 4;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .image-container:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    }
+
+    .image-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      z-index: 1;
+    }
+
+    .image-container.active img {
+      display: none;
+    }
+
+    .image-container.active video {
+      display: block;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @keyframes fadeBackground {
+      0% {
+        background: linear-gradient(135deg, #fceabb, #f8b500);
+      }
+      100% {
+        background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bg-music" loop>
+    <source src="audio/cabino-theme.mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+
+  <div class="hero">
+    <video src="videos/cabino-gangster.mp4" muted autoplay loop playsinline></video>
+  </div>
+
+  <h1>Cabino el Pajarito</h1>
+  <p>3 meses de edad y ya se cree el rey del gallinero 🐥👑</p>
+
+  <p class="click-instruction">¡Haz clic en las fotos para ver a Cabino en acción! 🐣🎬</p>
+
+  <div class="gallery">
+    <div class="image-container" onclick="playVideo(this)">
+      <img src="images/cabino1.png" alt="Cabino 1" />
+      <video src="videos/cabino1.mp4" muted autoplay loop playsinline></video>
+    </div>
+    <div class="image-container" onclick="playVideo(this)">
+      <img src="images/cabino2.png" alt="Cabino 2" />
+      <video src="videos/cabino2.mp4" muted autoplay loop playsinline></video>
+    </div>
+    <div class="image-container" onclick="playVideo(this)">
+      <img src="images/cabino3.png" alt="Cabino 3" />
+      <video src="videos/cabino3.mp4" muted autoplay loop playsinline></video>
+    </div>
+  </div>
+
+  <script>
+    function playVideo(container) {
+      container.classList.toggle('active');
+    }
+
+    function enableAudioOnInteraction() {
+      const audio = document.getElementById('bg-music');
+      const tryPlay = () => {
+        if (audio && audio.paused) {
+          audio.play().then(() => {
+            document.removeEventListener('click', tryPlay);
+            document.removeEventListener('touchstart', tryPlay);
+            document.removeEventListener('mousemove', tryPlay);
+            document.removeEventListener('scroll', tryPlay);
+          }).catch(e => console.log('Autoplay blocked:', e));
+        }
+      };
+      document.addEventListener('click', tryPlay);
+      document.addEventListener('touchstart', tryPlay);
+      document.addEventListener('mousemove', tryPlay);
+      document.addEventListener('scroll', tryPlay);
+    }
+
+    window.addEventListener('DOMContentLoaded', enableAudioOnInteraction);
+  </script>
+</body>
+</html>
